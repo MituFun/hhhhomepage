@@ -51,7 +51,7 @@ function Email(encoded) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-	// 获取一言数据
+	// 获取一言数据 (诗词和哲学类)
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {
@@ -59,7 +59,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			document.getElementById('description').innerHTML = res.hitokoto + "<br/> -「<strong>" + res.from + "</strong>」";
 		}
 	};
-	xhr.open("GET", "https://v1.hitokoto.cn", true);
+	// 请求诗词和哲学类
+	xhr.open("GET", "https://v1.hitokoto.cn?c=j&c=i", true);
 	xhr.send();
 
 	var iUpElements = document.querySelectorAll(".iUp");
@@ -72,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		avatarElement.classList.add("show");
 	});
 });
+
 
 var btnMobileMenu = document.querySelector('.btn-mobile-menu__icon');
 var navigationWrapper = document.querySelector('.navigation-wrapper');
