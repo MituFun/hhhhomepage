@@ -2,8 +2,7 @@
   "name": "dmego-home-page",
   "version": "1.0.5",
   "description": "Dmego Home Page",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dmego/home.github.io.git"
@@ -17,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/dmego/home.github.io/issues"
   },
-  "homepage": "https://github.com/dmego/home.github.io#readme"
+  "homepage": "https://github.com/dmego/home.github.io#readme",
+  "dependencies": {
+    "axios": "^1.7.9"
+  }
 }
