@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	};
 	// 请求随机圣经句子（WEB 版本）
-	xhr.open("GET", "https://bible-api.com/data/cuv/random", true);
+	xhr.open("GET", "https://bible-api.com/data/web/random", true);
 	xhr.send();
 
 	var iUpElements = document.querySelectorAll(".iUp");
