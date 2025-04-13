@@ -45,34 +45,21 @@ function getBingImages(imgUrls) {
 	sessionStorage.setItem(indexName, index);
 }
 
-function Email(encoded) {
-	var address = encoded;
+function decryptEmail(encoded) {
+	var address = atob(encoded);
 	window.location.href = "mailto:" + address;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-	// 获取随机圣经句子数据
+	// 获取一言数据
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {
 			var res = JSON.parse(this.responseText);
-			// 检查返回的数据格式并提取需要的字段
-			if (res && res.random_verse) {
-				var randomVerse = res.random_verse;
-				var verseText = randomVerse.text.trim();
-				var bookName = randomVerse.book;
-				var chapter = randomVerse.chapter;
-				var verse = randomVerse.verse;
-
-				// 构造显示的内容
-				document.getElementById('description').innerHTML = '"' + verseText + '"<br/> - <strong>' + bookName + ' ' + chapter + ':' + verse + '</strong>';
-			} else {
-				document.getElementById('description').innerHTML = '抓取文本服务异常，但这并不会影响你访问我的网站。';
-			}
+			document.getElementById('description').innerHTML = res.hitokoto + "<br/> -「<strong>" + res.from + "</strong>」";
 		}
 	};
-	// 请求随机圣经句子（WEB 版本）
-	xhr.open("GET", "https://bible-api.com/data/cuv/random", true);
+	xhr.open("GET", "https://v1.hitokoto.cn", true);
 	xhr.send();
 
 	var iUpElements = document.querySelectorAll(".iUp");
@@ -85,8 +72,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		avatarElement.classList.add("show");
 	});
 });
-
-
 
 var btnMobileMenu = document.querySelector('.btn-mobile-menu__icon');
 var navigationWrapper = document.querySelector('.navigation-wrapper');
