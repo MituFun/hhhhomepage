@@ -76,13 +76,13 @@ function decryptEmail(encoded) {
 
 // 获取Bing壁纸信息并显示
 function fetchBingInfo() {
-	fetch('https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1')
+	fetch('https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1')
 		.then(response => response.json())
 		.then(data => {
 			if (data.images && data.images.length > 0) {
 				const img = data.images[0];
 				var panel = document.querySelector('#panel');
-				var url = "https://www.bing.com" + img.url;
+				var url = "https://cn.bing.com" + img.url;
 				panel.style.background = "url('" + url + "') center center no-repeat #666";
 				panel.style.backgroundSize = "cover";
 				
