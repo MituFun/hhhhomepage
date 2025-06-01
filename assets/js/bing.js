@@ -17,11 +17,16 @@ const req = https.request(options, bing_res => {
     bing_body = Buffer.concat(bing_body);
     bing_data = JSON.parse(bing_body.toString());
     let img_array = bing_data.images;
-    let img_url = [];
+    let img_info = [];
     img_array.forEach(img => {
-      img_url.push(img.url);
+      img_info.push({
+        url: img.url,
+        title: img.title || '',
+        copyright: img.copyright || '',
+        copyrightlink: img.copyrightlink || ''
+      });
     });
-    var jsonpStr = "getBingImages(" + JSON.stringify(img_url) + ")";
+    var jsonpStr = "getBingImages(" + JSON.stringify(img_info) + ")";
     fs.writeFile('./assets/json/images.json', jsonpStr, (err) => {
       if (err) {
         throw err;

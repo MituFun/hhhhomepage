@@ -5,15 +5,131 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="MituFun Home">
+    <meta name="description" content="MituFun的个人主页">
     <meta name="keywords" content="MituFun,Homepage">
     <meta name="author" content="MituFun">
-    <title>MituFun Home</title>
+    <title>MituFun的个人主页</title>
     <link rel="stylesheet" type="text/css" href="css/onlinewebfonts.css" />
     <link rel="stylesheet" type="text/css" href="css/vno.css">
     <link rel="stylesheet" type="text/css" href="css/iconfont.css">
     <link rel="apple-touch-icon" href="img/icon.png">
     <link rel="icon" href="img/icon.png">
+    <style>
+    .bing-info-container {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1000;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .bing-info-container.up {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .bing-info-icon-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .bing-info-icon-wrap:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    .bing-info-icon {
+        width: 20px;
+        height: 20px;
+        color: rgba(255, 255, 255, 0.9);
+        transition: color 0.3s ease;
+    }
+    .bing-info-text {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+    .bing-info-popup {
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        margin-bottom: 10px;
+        padding: 24px 28px 18px 28px;
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 14px;
+        color: #fff;
+        font-size: 15px;
+        line-height: 1.6;
+        white-space: normal;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease, visibility 0.2s ease;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+        min-width: 260px;
+        max-width: 420px;
+        text-align: center;
+    }
+    .bing-info-icon-wrap:hover .bing-info-popup {
+        opacity: 1;
+        visibility: visible;
+    }
+    .bing-info-title {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 12px;
+        line-height: 1.2;
+    }
+    .bing-info-desc {
+        font-size: 17px;
+        margin-bottom: 14px;
+        line-height: 1.5;
+    }
+    .bing-info-author {
+        font-size: 13px;
+        color: #e0e0e0;
+        opacity: 0.85;
+        margin-bottom: 0;
+    }
+    .bing-info-author a {
+        color: #aad8ff;
+        text-decoration: underline;
+        font-size: 13px;
+    }
+    .bing-info-author a:hover {
+        color: #fff;
+    }
+    @media (max-width: 600px) {
+        .bing-info-container {
+            left: 6px;
+            bottom: 6px;
+        }
+        .bing-info-popup {
+            max-width: 95vw;
+            min-width: 120px;
+            padding: 10px 10px;
+            font-size: 13px;
+        }
+        .bing-info-title {
+            font-size: 15px;
+        }
+        .bing-info-icon {
+            width: 18px;
+            height: 18px;
+        }
+        .bing-info-text {
+            font-size: 13px;
+        }
+    }
+    </style>
 </head>
 
 <body>
@@ -34,7 +150,7 @@
                     </div>
 
                     <h1 class="panel-cover__title panel-title iUp">
-                        <a href="#" title="MituFun Home">MituFun</a>
+                        <a href="#" title="是的，这里是MituFun">MituFun</a>
                     </h1>
                     <p class="panel-cover__subtitle panel-subtitle iUp">迷途知返</p>
                     <hr class="panel-cover__divider iUp" />
@@ -88,8 +204,11 @@
             <div class="panel-cover--overlay cover-slate"></div>
         </div>
         <div class="remark iUp">
-            <p class="power">Developed by MituFun</p>
+            <p class="power">
+              This website is based on <a href="https://github.com/dmego/home.github.io" target="_blank">Dmego's project</a> and modified by MituFun.
+            </p>
         </div>
+        <script defer src="https://admin.mitufun.top/script.js" data-website-id="f936b4d2-049c-4cdd-b7b3-ff77b13de782"></script>
     </header>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="./assets/json/images.json?cb=getBingImages"></script>

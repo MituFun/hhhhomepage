@@ -27,52 +27,80 @@ var iUp = (function () {
 	};
 })();
 
-function getBingImages(imgUrls) {
-	/**
-	 * 获取Bing壁纸
-	 * 先使用 GitHub Action 每天获取 Bing 壁纸 URL 并更新 images.json 文件
-	 * 然后读取 images.json 文件中的数据
-	 */
+function getBingImages(imgInfos) {
 	var indexName = "bing-image-index";
 	var index = sessionStorage.getItem(indexName);
 	var panel = document.querySelector('#panel');
-	if (isNaN(index) || index == 7) index = 0;
+	if (isNaN(index) || index == imgInfos.length - 1) index = 0;
 	else index++;
-	var imgUrl = imgUrls[index];
-	var url = "https://www.cn.bing.com" + imgUrl;
+	var imgInfo = imgInfos[index];
+	var url = "https://www.cn.bing.com" + imgInfo.url;
 	panel.style.background = "url('" + url + "') center center no-repeat #666";
 	panel.style.backgroundSize = "cover";
 	sessionStorage.setItem(indexName, index);
+	
+	setupBingInfo(imgInfo);
 }
 
-function Email(encoded) {
-	var address = encoded;
+function setupBingInfo(imgInfo) {
+	var panel = document.querySelector('#panel');
+	var infoContainer = document.getElementById('bing-info-container');
+	if (!infoContainer) {
+		infoContainer = document.createElement('div');
+		infoContainer.className = 'bing-info-container iUp';
+		infoContainer.id = 'bing-info-container';
+		panel.appendChild(infoContainer);
+	}
+	
+	infoContainer.innerHTML = `
+		<div class="bing-info-icon-wrap" style="cursor:pointer;">
+			<svg class="bing-info-icon" viewBox="0 0 13 13" fill="currentColor">
+				<path d="M6.5 3a1.5 1.5 0 1 0 1.5 1.5 1.5 1.5 0 0 0-1.5-1.5zm0-3a4.5 4.5 0 0 0-4.5 4.5 5.607 5.607 0 0 0 .087.873c.453 2.892 2.951 5.579 3.706 6.334a1 1 0 0 0 1.414 0c.755-.755 3.253-3.442 3.706-6.334a5.549 5.549 0 0 0 .087-.873 4.5 4.5 0 0 0-4.5-4.5zm3.425 5.218c-.36 2.296-2.293 4.65-3.425 5.782-1.131-1.132-3.065-3.486-3.425-5.782a4.694 4.694 0 0 1-.075-.718 3.5 3.5 0 0 1 7 0 4.634 4.634 0 0 1-.075.718z"/>
+			</svg>
+			<span class="bing-info-text">INFO</span>
+			<div class="bing-info-popup">
+				<div class="bing-info-title">${imgInfo.title || ''}</div>
+				<div class="bing-info-desc">${imgInfo.copyright || ''}</div>
+				<div class="bing-info-author">${imgInfo.copyrightlink ? `<a href=\"${imgInfo.copyrightlink}\" target=\"_blank\">了解更多</a>` : ''}</div>
+			</div>
+		</div>
+	`;
+	
+	iUp.up(infoContainer);
+}
+
+function decryptEmail(encoded) {
+	var address = atob(encoded);
 	window.location.href = "mailto:" + address;
 }
 
+// 获取Bing壁纸信息并显示
+function fetchBingInfo() {
+	fetch('https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1')
+		.then(response => response.json())
+		.then(data => {
+			if (data.images && data.images.length > 0) {
+				const img = data.images[0];
+				var panel = document.querySelector('#panel');
+				var url = "https://www.bing.com" + img.url;
+				panel.style.background = "url('" + url + "') center center no-repeat #666";
+				panel.style.backgroundSize = "cover";
+				
+				setupBingInfo(img);
+			}
+		});
+}
+
 document.addEventListener('DOMContentLoaded', function () {
-	// 获取随机圣经句子数据
+	// 获取一言数据
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {
 			var res = JSON.parse(this.responseText);
-			// 检查返回的数据格式并提取需要的字段
-			if (res && res.random_verse) {
-				var randomVerse = res.random_verse;
-				var verseText = randomVerse.text.trim();
-				var bookName = randomVerse.book;
-				var chapter = randomVerse.chapter;
-				var verse = randomVerse.verse;
-
-				// 构造显示的内容
-				document.getElementById('description').innerHTML = '"' + verseText + '"<br/> - <strong>' + bookName + ' ' + chapter + ':' + verse + '</strong>';
-			} else {
-				document.getElementById('description').innerHTML = '抓取文本服务异常，但这并不会影响你访问我的网站。';
-			}
+			document.getElementById('description').innerHTML = res.hitokoto + "<br/> -「<strong>" + res.from + "</strong>」";
 		}
 	};
-	// 请求随机圣经句子（WEB 版本）
-	xhr.open("GET", "https://bible-api.com/data/cuv/random", true);
+	xhr.open("GET", "https://v1.hitokoto.cn?c=d&c=i&c=k", true);
 	xhr.send();
 
 	var iUpElements = document.querySelectorAll(".iUp");
@@ -84,9 +112,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	avatarElement.addEventListener('load', function () {
 		avatarElement.classList.add("show");
 	});
+
+	fetchBingInfo();
 });
-
-
 
 var btnMobileMenu = document.querySelector('.btn-mobile-menu__icon');
 var navigationWrapper = document.querySelector('.navigation-wrapper');
@@ -117,3 +145,8 @@ btnMobileMenu.addEventListener('click', function () {
 	btnMobileMenu.classList.toggle('animated');
 	btnMobileMenu.classList.toggle('fadeIn');
 });
+
+// The getBingImages function might still be called by your JSONP script:
+// <script type="text/javascript" src="./assets/json/images.json?cb=getBingImages"></script>
+// Ensure it also correctly relies on CSS for hover if it's used.
+// The modification above in getBingImages function handles this.
