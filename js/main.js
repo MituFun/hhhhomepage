@@ -34,7 +34,7 @@ function getBingImages(imgInfos) {
 	if (isNaN(index) || index == imgInfos.length - 1) index = 0;
 	else index++;
 	var imgInfo = imgInfos[index];
-	var url = "https://www.cn.bing.com" + imgInfo.url;
+	var url = "https://cn.bing.com" + imgInfo.url;
 	panel.style.background = "url('" + url + "') center center no-repeat #666";
 	panel.style.backgroundSize = "cover";
 	sessionStorage.setItem(indexName, index);
@@ -76,7 +76,7 @@ function decryptEmail(encoded) {
 
 // 获取Bing壁纸信息并显示
 function fetchBingInfo() {
-	fetch('https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1')
+	fetch('https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN')
 		.then(response => response.json())
 		.then(data => {
 			if (data.images && data.images.length > 0) {
