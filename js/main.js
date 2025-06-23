@@ -94,11 +94,10 @@ function fetchBingInfo() {
 document.addEventListener('DOMContentLoaded', function () {
 	// 获取随机圣经句子
 	const books = [
-		{ id: 'genesis', bookNumber: 1, chapters: 50, name: 'Genesis' },
-		{ id: 'psalms', bookNumber: 19, chapters: 150, name: 'Psalms' },
-		{ id: 'proverbs', bookNumber: 20, chapters: 31, name: 'Proverbs' },
-		{ id: 'john', bookNumber: 43, chapters: 21, name: 'John' },
-		{ id: 'romans', bookNumber: 45, chapters: 16, name: 'Romans' }
+		{ id: '箴言', bookNumber: 20, chapters: 31, name: '箴言' },
+		{ id: '诗篇', bookNumber: 19, chapters: 150, name: '诗篇' },
+		{ id: '传道书', bookNumber: 21, chapters: 12, name: '传道书' },
+		{ id: '雅各书', bookNumber: 59, chapters: 5, name: '雅各书' }
 	];
 	const version = 'cns';
 	const book = books[Math.floor(Math.random() * books.length)];
@@ -109,10 +108,10 @@ document.addEventListener('DOMContentLoaded', function () {
 			const verses = Object.values(data.verses);
 			const verse = verses[Math.floor(Math.random() * verses.length)];
 			const text = verse.text.replace(/<[^>]+>/g, '').trim();
-			document.getElementById('description').innerHTML = `${text}<br/> -「<strong>${data.name} ${chapter}:${verse.verse}</strong>」`;
+			document.getElementById('description').innerHTML = `${text}<br/> -「<strong>${data.name}:${verse.verse}</strong>」`;
 		})
 		.catch(() => {
-			document.getElementById('description').innerHTML = '加载圣经句子失败，请刷新重试。';
+			document.getElementById('description').innerHTML = `我将拾头仰望山冈，我的援助来自何方？<br/> -「<strong>诗篇 121:1</strong>」`;
 		});
 
 	var iUpElements = document.querySelectorAll(".iUp");
