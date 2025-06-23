@@ -92,16 +92,28 @@ function fetchBingInfo() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-	// 获取一言数据
-	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function () {
-		if (this.readyState == 4 && this.status == 200) {
-			var res = JSON.parse(this.responseText);
-			document.getElementById('description').innerHTML = res.hitokoto + "<br/> -「<strong>" + res.from + "</strong>」";
-		}
-	};
-	xhr.open("GET", "https://v1.hitokoto.cn?c=d&c=i&c=k", true);
-	xhr.send();
+	// 获取随机圣经句子
+	const books = [
+		{ id: 'genesis', bookNumber: 1, chapters: 50, name: 'Genesis' },
+		{ id: 'psalms', bookNumber: 19, chapters: 150, name: 'Psalms' },
+		{ id: 'proverbs', bookNumber: 20, chapters: 31, name: 'Proverbs' },
+		{ id: 'john', bookNumber: 43, chapters: 21, name: 'John' },
+		{ id: 'romans', bookNumber: 45, chapters: 16, name: 'Romans' }
+	];
+	const version = 'cns';
+	const book = books[Math.floor(Math.random() * books.length)];
+	const chapter = Math.floor(Math.random() * book.chapters) + 1;
+	fetch(`https://api.getbible.net/v2/${version}/${book.bookNumber}/${chapter}.json`)
+		.then(res => res.json())
+		.then(data => {
+			const verses = Object.values(data.verses);
+			const verse = verses[Math.floor(Math.random() * verses.length)];
+			const text = verse.text.replace(/<[^>]+>/g, '').trim();
+			document.getElementById('description').innerHTML = `${text}<br/> -「<strong>${data.name} ${chapter}:${verse.verse}</strong>」`;
+		})
+		.catch(() => {
+			document.getElementById('description').innerHTML = '加载圣经句子失败，请刷新重试。';
+		});
 
 	var iUpElements = document.querySelectorAll(".iUp");
 	iUpElements.forEach(function (element) {
