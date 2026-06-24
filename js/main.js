@@ -105,10 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	fetch(`https://api.getbible.net/v2/${version}/${book.bookNumber}/${chapter}.json`)
 		.then(res => res.json())
 		.then(data => {
-			const verses = Object.values(data.verses);
-			const verse = verses[Math.floor(Math.random() * verses.length)];
-			const text = verse.text.replace(/<[^>]+>/g, '').trim();
-			document.getElementById('description').innerHTML = `${text}<br/> -「<strong>${data.name}:${verse.verse}</strong>」`;
+			document.getElementById('description').innerHTML = `我将拾头仰望山冈，我的援助来自何方？<br/> -「<strong>诗篇 121:1</strong>」`;
 		})
 		.catch(() => {
 			document.getElementById('description').innerHTML = `我将拾头仰望山冈，我的援助来自何方？<br/> -「<strong>诗篇 121:1</strong>」`;
