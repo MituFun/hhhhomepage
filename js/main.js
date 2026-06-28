@@ -105,10 +105,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	fetch(`https://api.getbible.net/v2/${version}/${book.bookNumber}/${chapter}.json`)
 		.then(res => res.json())
 		.then(data => {
-			document.getElementById('description').innerHTML = `我将拾头仰望山冈，我的援助来自何方？<br/> -「<strong>诗篇 121:1</strong>」`;
+			document.getElementById('description').innerHTML = `I will lift up mine eyes unto the hills, from whence cometh my help.<br/> -「<strong>Psalm 121:1</strong>」`;
 		})
 		.catch(() => {
-			document.getElementById('description').innerHTML = `我将拾头仰望山冈，我的援助来自何方？<br/> -「<strong>诗篇 121:1</strong>」`;
+			document.getElementById('description').innerHTML = `I will lift up mine eyes unto the hills, from whence cometh my help.<br/> -「<strong>Psalm 121:1</strong>」`;
 		});
 
 	var iUpElements = document.querySelectorAll(".iUp");
