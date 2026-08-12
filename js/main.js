@@ -102,14 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	const version = 'cns';
 	const book = books[Math.floor(Math.random() * books.length)];
 	const chapter = Math.floor(Math.random() * book.chapters) + 1;
-	fetch(`https://api.getbible.net/v2/${version}/${book.bookNumber}/${chapter}.json`)
-		.then(res => res.json())
-		.then(data => {
-			document.getElementById('description').innerHTML = `I will lift up mine eyes unto the hills, from whence cometh my help.<br/> -「<strong>Psalm 121:1</strong>」`;
-		})
-		.catch(() => {
-			document.getElementById('description').innerHTML = `I will lift up mine eyes unto the hills, from whence cometh my help.<br/> -「<strong>Psalm 121:1</strong>」`;
-		});
+	document.getElementById('description').innerHTML = `I will lift up mine eyes unto the hills, from whence cometh my help.<br/> -「<strong>Psalm 121:1</strong>」`;
 
 	var iUpElements = document.querySelectorAll(".iUp");
 	iUpElements.forEach(function (element) {
