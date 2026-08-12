@@ -102,7 +102,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	const version = 'cns';
 	const book = books[Math.floor(Math.random() * books.length)];
 	const chapter = Math.floor(Math.random() * book.chapters) + 1;
-	document.getElementById('description').innerHTML = `I will lift up mine eyes unto the hills, from whence cometh my help.<br/> -「<strong>Psalm 121:1</strong>」`;
+	document.getElementById('description').innerHTML = `God, grant me the serenity
+to accept the things I cannot change;
+courage to change the things I can;
+and wisdom to know the difference.<br/> -「<strong>Psalm 121:1</strong>」`;
 
 	var iUpElements = document.querySelectorAll(".iUp");
 	iUpElements.forEach(function (element) {
